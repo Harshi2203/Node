@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <style>
+            .error{
+                    color:red;
+                }
+		</style>
+		<script>
+			
+			
+			function checkValidation(){
+				let name 	 = 	document.getElementById("name").value;
+				let email 	 = 	document.getElementById("email").value;
+				let hobbies  = 	document.getElementsByName("hobbies[]");
+				let male 	 = 	document.getElementById("male");
+				let female   = 	document.getElementById("female");
+				let phone    = 	document.getElementById("phone").value;
+				let password =	document.getElementById("password").value;
+				let photo 	 =  document.getElementById("photo").files[0];
+				
+				
+				//gender;
+				if(!male.checked && !female.checked){
+						document.getElementById("radioError").innerHTML ="Please check atleast one gender";	
+				}
+				else{	
+						document.getElementById("radioError").innerHTML ="";	
+					}
+					
+					
+				//hobbies;
+				let count	=	0;
+				for(let i = 0; i<hobbies.length;i++){
+					if(hobbies[i].checked){
+						count=1;
+					};
+				}
+				if(count==0){
+					document.getElementById("hobbiesError").innerHTML ="Please check atleast one hobby";
+					
+				}else{
+					document.getElementById("hobbiesError").innerHTML ="";
+				
+				}
+				
+
+                //name;
+				if(name==""){
+					
+					document.getElementById("nameError").innerHTML ="Please enter name..";
+					
+				}else{
+					document.getElementById("nameError").innerHTML ="";
+				}
+				
+				
+				//phone;
+				if(phone==""){
+					document.getElementById("phoneError").innerHTML ="Please enter phone no..";
+					
+				}else{
+					if(phone>1000000000 && phone<9999999999){
+						document.getElementById("phoneError").innerHTML ="";
+					}
+					else{
+						document.getElementById("phoneError").innerHTML = "Please enter correct phone no..";
+					}
+				}
+				
+				
+				
+				//password;
+				if(password==""){
+					document.getElementById("passwordError").innerHTML ="Please enter password..";
+					
+				}else{
+					if(password.length>=8){
+						document.getElementById("passwordError").innerHTML ="";
+					}
+					else{
+						document.getElementById("passwordError").innerHTML = "Please enter correct password..";
+					}
+				}
+				
+				
+				
+				//email;
+				if(email==""){
+					document.getElementById("emailError").innerHTML ="Please enter email..";
+				}else{
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if(emailRegex.test(email)){;
+						document.getElementById("emailError").innerHTML ="";
+					}else{
+						
+						document.getElementById("emailError").innerHTML ="Please enter valid email..";
+					}	
+				}
+
+                 
+                //photo;
+                const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+                const maxSize = 10*1024*1024;
+                if(!photo){
+                document.getElementById("photoError").innerHTML = "Please Select Image...";
+                }
+                else{
+                    if(!validTypes.includes(photo.type)){
+                        document.getElementById("photoError").innerHTML = "Please Select Image...";
+                    }
+                    if(photo.size>maxSize){
+                        document.getElementById("photoError").innerHTML = "Please Select Image...";
+                    }
+                    else{
+                        document.getElementById("photoError").innerHTML = "";
+                    }
+                }
+				
+				
+			}
+	</script>
+	</head>
+	<body>
+		<table  width="600px" height="400px">
+			<form action="/submit-form" method="POST"  >
+				<tr>
+					<th>Name</th>
+					<td><input id="name"  type="text" name="name" placeholder="Enter Name..">
+						<span id="nameError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td><input id="email" type="email" name="email" placeholder="Enter Email..">
+					
+						<span id="emailError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Phone</th>
+					<td><input id="phone" type="number" name="phone" placeholder="phone">
+					
+						<span id="phoneError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Password</th>
+					<td><input id="password" type="password" name="password" placeholder="password">
+					
+						<span id="passwordError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Gender</th>
+					<td>
+						Male<input type="radio" id="male" name="gender" value="male" >
+						Female<input type="radio" id="female" name="gender" value="female" >
+						<span id="radioError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Hobbies</th>
+					<td>
+						Music	<input type="checkbox" name="hobbies[]" value="music" >
+						Dancing	<input type="checkbox" name="hobbies[]" value="dancing" >
+						Reading	<input type="checkbox" name="hobbies[]" value="reading" >
+						<span id="hobbiesError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>Photo</th>
+					<td>
+                        <input id="photo" type="file" name="file1">
+						<span id="photoError" class="error"></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button  type="submit">Submit</button>
+					</td>
+				</tr>	
+			</form>
+		</table>
+</body>
+</html>
